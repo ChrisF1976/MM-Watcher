@@ -49,12 +49,29 @@ This project provides a script to monitor changes to the `config.js` file of a [
     ```
 
 ## Refresh Script Example
-The `refreshCommand` should point to a shell script that restarts or refreshes your MagicMirror. 
-I'm using an XdoTool Key-command
+The `refreshCommand` should point to a shell script that restarts or refreshes your MagicMirror. I'm using an XdoTool Key-command in headless mode.
 Below is an example `refresh/script.sh`:
 
 ```bash
-#!/bin/bash
-cd /home/pi/MagicMirror
-DISPLAY=:0 npm start
+export DISPLAY=:0.0 && xdotool key ctrl+r
 ```
+Make the script executable:
+```bash
+chmod +x /path/to/your/refresh/script.sh
+```
+Ensure the script works manually before automating it.
+
+## Manual Usage without pm2
+Start the file watcher:
+```bash
+node watchConfig.js
+```
+Modify and save `config.js` to see the MagicMirror automatically refresh.
+
+## Contributing
+
+Feel free to submit issues or pull requests if you’d like to enhance this script.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file
