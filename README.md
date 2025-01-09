@@ -43,7 +43,6 @@ This project provides a script to monitor changes to the `config.js` file of a [
 
 5. **(Optional) Set up the script to run on startup using `pm2`:**
     ```bash
-    npm install -g pm2
     pm2 start watchConfig.js --name "MM-Watcher"
     pm2 save
     ```
