@@ -59,7 +59,7 @@ Make the script executable:
 ```bash
 chmod +x /path/to/your/refresh/script.sh
 ```
-Ensure the script works manually before automating it.
+**Ensure the script works manually before automating it!**
 
 ## Manual Usage without pm2
 Start the file watcher:
