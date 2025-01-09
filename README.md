@@ -17,7 +17,7 @@ This project provides a script to monitor changes to the `config.js` file of a [
 1. **Clone the repository or copy the script to your machine:**
     ```bash
     git clone https://github.com/ChrisF1976/MM-Watcher.git
-    cd magicmirror-config-refresh
+    cd MM-Watcher
     ```
 
 2. **Update the script with the correct path to your `config.js` file and refresh command:**
@@ -46,13 +46,15 @@ This project provides a script to monitor changes to the `config.js` file of a [
     npm install -g pm2
     pm2 start watchConfig.js --name "MM-Watcher"
     pm2 save
-    pm2 startup
     ```
 
 ## Refresh Script Example
-The `refreshCommand` should point to a shell script that restarts or refreshes your MagicMirror. Below is an example `refresh/script.sh`:
+The `refreshCommand` should point to a shell script that restarts or refreshes your MagicMirror. 
+I'm using an XdoTool Key-command
+Below is an example `refresh/script.sh`:
 
 ```bash
 #!/bin/bash
 cd /home/pi/MagicMirror
 DISPLAY=:0 npm start
+```
