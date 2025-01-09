@@ -49,7 +49,7 @@ This project provides a script to monitor changes to the `config.js` file of a [
     ```
 
 ## Refresh Script Example
-The `refreshCommand` should point to a shell script that restarts or refreshes your MagicMirror. I'm using an XdoTool Key-command in headless mode.
+The `refreshCommand` should point to a shell script that restarts or refreshes your MagicMirror. I'm using [xdotool](https://github.com/jordansissel/xdotool) key-command in headless mode.
 Below is an example `refresh/script.sh`:
 
 ```bash
