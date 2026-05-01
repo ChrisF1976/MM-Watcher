@@ -48,17 +48,91 @@ This project provides a script to monitor changes to the `config.js` file of a [
     ```
 
 ## Refresh Script Example
-The `refreshCommand` should point to a shell script that restarts or refreshes your MagicMirror. I'm using [xdotool](https://github.com/jordansissel/xdotool) key-command in headless mode.
-Below is an example `refresh/script.sh`:
+The `refreshCommand` should point to a shell script that restarts or refreshes your MagicMirror. The script below automatically detects whether you're using X11 or Wayland and uses the appropriate method.
+
+### Step 1: Install Required Tools
+
+**For X11 systems:**
 
 ```bash
-export DISPLAY=:0.0 && xdotool key ctrl+r
+sudo apt install xdotool
 ```
-Make the script executable:
+
+**For Wayland systems:**
+
 ```bash
-chmod +x /path/to/your/refresh/script.sh
+sudo apt install ydotool
+sudo usermod -a -G input $USER
 ```
-**Ensure the script works manually before automating it!**
+
+**Important:** Reboot your system after installing ydotool to apply the group changes.
+
+**For systems with both (or if unsure):** Install both tools - the script will choose the right one automatically:
+
+```bash
+sudo apt install xdotool ydotool
+sudo usermod -a -G input $USER
+```
+
+
+### Step 2: Create the Refresh Script
+
+Create your refresh script (e.g., /home/pi/refresh.sh):
+
+```bash
+#!/bin/bash
+
+# Auto-detect X11 or Wayland and refresh MagicMirror
+if [ -n "$WAYLAND_DISPLAY" ]; then
+    # Wayland system detected
+    if command -v ydotool &> /dev/null; then
+        ydotool key ctrl+r
+    else
+        # Fallback for Xwayland
+        export DISPLAY=:0
+        export XAUTHORITY=/home/$USER/.Xauthority
+        xdotool key ctrl+r
+    fi
+else
+    # X11 system detected
+    export DISPLAY=:0.0
+    xdotool key ctrl+r
+fi
+```
+
+### Step 3: Make the Script Executable
+
+```bash
+chmod +x /home/pi/refresh.sh
+```
+
+### Step 4: Test the Script
+
+**For X11:**
+
+```bash
+/home/pi/refresh.sh
+```
+
+**For Wayland:**
+You may need to run a test from the local console (not SSH) first to verify:
+
+```bash
+/home/pi/refresh.sh
+```
+If the MagicMirror doesn't refresh, try running the script from the Pi's local terminal (not over SSH).
+
+### Step 5: Update watchConfig.js
+
+In your `watchConfig.js`, point to your refresh script:
+
+```bash
+const refreshCommand = '/home/pi/refresh.sh';
+```
+**Notes:**
+- The script works on both X11 and Wayland systems automatically
+- No changes to watchConfig.js are needed when switching between display servers
+- If using Wayland with SSH, you may need to run the watcher from the local terminal or use pm2 to start it on boot
 
 ## Manual Usage without pm2
 Start the file watcher:
