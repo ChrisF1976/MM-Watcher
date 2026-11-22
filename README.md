@@ -26,7 +26,7 @@ Example with different config file:
 {
   module: "MM-Watcher",
   config: {
-    files: ["config/config2.js", "css/custom.css"],
+    files: ["config/config2.js", "config/custom.css"],
   },
 },
  ```
