@@ -15,11 +15,21 @@ Add to `config.js`:
  
 ```js
 {
-  module: "MM-Watcher"
-}
+  module: "MM-Watcher",
+},
 ```
  
 (No `position` needed, the module has no visible output.)
+
+Example with different config file:
+```is
+{
+  module: "MM-Watcher",
+  config: {
+    files: ["config/config2.js", "css/custom.css"],
+  },
+},
+ ```
  
 ## Options
  
